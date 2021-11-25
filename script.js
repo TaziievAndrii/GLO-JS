@@ -1,1 +1,1 @@
-'useStrict';
+
