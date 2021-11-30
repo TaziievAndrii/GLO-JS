@@ -26,11 +26,12 @@ function getFullPrice(screenPrice, allServicePrices) {
 }
 
 function getTitle(string) {
-    return string.trim().charAt(0).toUpperCase() + string.trim().slice(1).toLowerCase();
+    const trimmedString = string.trim().toLowerCase();
+    return trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
 }
 
 const getServicePercentPrices = function (totalCost, rollbackPercentage) {
-    return totalCost - rollbackPercentage
+    return Math.ceil(totalCost - rollbackPercentage)
 }
 
 const showTypeOf = function (variable) {
@@ -53,15 +54,14 @@ const getRollbackMessage = function (price) {
 const allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
 const fullPrice = getFullPrice(screenPrice, allServicePrices);
 const rollbackPercentage = fullPrice * (rollback / 100);
-const servicePercentPrice = Math.ceil(getServicePercentPrices(fullPrice, rollbackPercentage));
+const servicePercentPrice = getServicePercentPrices(fullPrice, rollbackPercentage);
 
 showTypeOf(title);
 showTypeOf(fullPrice);
 showTypeOf(adaptive);
 
 // блок вывода в console
-console.log("[screens]", screens.split(","));
 console.log("[screens]", screens.length);
-
+console.log("[arrayScreens]", arrayScreens);
 console.log("[servicePercentPrice]", servicePercentPrice);
 console.log("[getRollbackMessage]", getRollbackMessage(fullPrice));
