@@ -15,32 +15,53 @@ const servicePrice2 = +prompt("Сколько это будет стоить?", 
 // Рассчитываем стоимость проекта
 const rollback = 27;
 const screenPrice = +prompt("Сколько будет стоить данная работа?", "пример: 12000");
-const fullPrice = screenPrice + servicePrice1 + servicePrice2;
-const rollbackPercentage = fullPrice * (rollback / 100);
-const servicePercentPrice = Math.ceil(fullPrice - rollbackPercentage);
 
-// Условия предоставления скидки
-switch (true) {
-    case fullPrice >= 30000:
-        console.log("Даем скидку в 10%");
-        break;
-    case fullPrice >= 15000 && fullPrice < 30000:
-        console.log("Даем скидку в 5%");
-        break;
-    case fullPrice < 15000 && fullPrice >= 0:
-        console.log("Скидка не предусмотрена");
-        break;
-    case fullPrice < 0:
-        console.log("Что то пошло не так");
-        break;
+// функциональный блок
+const getAllServicePrices = function (servicePrice1, servicePrice2) {
+    return servicePrice1 + servicePrice2;
 }
 
-console.log("[title]", typeof title);
+function getFullPrice(screenPrice, allServicePrices) {
+    return screenPrice + allServicePrices
+}
+
+function getTitle(string) {
+    return string.trim().charAt(0).toUpperCase() + string.trim().slice(1).toLowerCase();
+}
+
+const getServicePercentPrices = function (totalCost, rollbackPercentage) {
+    return totalCost - rollbackPercentage
+}
+
+const showTypeOf = function (variable) {
+    console.log("[variable]", typeof variable);
+}
+
+const getRollbackMessage = function (price) {
+    switch (true) {
+        case price >= 30000:
+            return "Даем скидку в 10%"
+        case price >= 15000 && price < 30000:
+            return "Даем скидку в 5%"
+        case price < 15000 && price >= 0:
+            return "Скидка не предусмотрена"
+        case price < 0:
+            return "Что то пошло не так"
+    }
+}
+
+const allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
+const fullPrice = getFullPrice(screenPrice, allServicePrices);
+const rollbackPercentage = fullPrice * (rollback / 100);
+const servicePercentPrice = Math.ceil(getServicePercentPrices(fullPrice, rollbackPercentage));
+
+showTypeOf(title);
+showTypeOf(fullPrice);
+showTypeOf(adaptive);
+
+// блок вывода в console
+console.log("[screens]", screens.split(","));
 console.log("[screens]", screens.length);
-console.log("[arrayScreens]", arrayScreens);
-console.log("[screenPrice]", screenPrice + " рублей");
-console.log("[fullPrice]", typeof fullPrice);
-console.log("[fullPrice]", fullPrice + " рублей");
-console.log("[rollbackPercentage]", rollbackPercentage);
-console.log("[adaptive]", typeof adaptive);
+
 console.log("[servicePercentPrice]", servicePercentPrice);
+console.log("[getRollbackMessage]", getRollbackMessage(fullPrice));
