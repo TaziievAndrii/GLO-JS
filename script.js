@@ -14,11 +14,25 @@ const servicePrice2 = +prompt("Сколько это будет стоить?", 
 
 // Рассчитываем стоимость проекта
 const rollback = 27;
-const screenPrice = +prompt("Сколько будет стоить данная работа?", "пример: 12000");
+let screenPrice;
+
 
 // функциональный блок
+const myScreenPrice = function () {
+    let price = 0;
+    do {
+        price += +prompt("Сколько будет стоить данная работа?", "пример: 12000");
+    } while (false)
+
+    return price
+}
+
+const isNumber = function (num) {
+    return !isNaN(parseFloat(num)) && isFinite(num)
+}
+
 const getAllServicePrices = function (servicePrice1, servicePrice2) {
-    return servicePrice1 + servicePrice2;
+    if (isNumber(servicePrice1 + servicePrice2)) return servicePrice1 + servicePrice2;
 }
 
 function getFullPrice(screenPrice, allServicePrices) {
@@ -31,7 +45,7 @@ function getTitle(string) {
 }
 
 const getServicePercentPrices = function (totalCost, rollbackPercentage) {
-    return Math.ceil(totalCost - rollbackPercentage)
+    return totalCost - rollbackPercentage
 }
 
 const showTypeOf = function (variable) {
@@ -51,10 +65,15 @@ const getRollbackMessage = function (price) {
     }
 }
 
+screenPrice = myScreenPrice();
 const allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
 const fullPrice = getFullPrice(screenPrice, allServicePrices);
+console.log("allServicePrices", allServicePrices);
+console.log("screenPrice", screenPrice);
+console.log("fullPrice", fullPrice);
 const rollbackPercentage = fullPrice * (rollback / 100);
 const servicePercentPrice = getServicePercentPrices(fullPrice, rollbackPercentage);
+
 
 showTypeOf(title);
 showTypeOf(fullPrice);
