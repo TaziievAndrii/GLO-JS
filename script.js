@@ -3,7 +3,7 @@
 // Узнаем подробности проекта 
 const title = prompt("Как называется ваш проект ?");
 const screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
-const arrayScreens = screens.toLowerCase().split(", ");
+const arrayScreens = screens.toLowerCase().split(",");
 const adaptive = confirm("Нужен ли адаптив на сайте?");
 
 // Узнаем про дополнительные услуги и их стоимость 
@@ -36,7 +36,7 @@ const getAllServicePrices = function (servicePrice1, servicePrice2) {
 }
 
 function getFullPrice(screenPrice, allServicePrices) {
-    return screenPrice + allServicePrices
+    if (isNumber(screenPrice + allServicePrices)) return screenPrice + allServicePrices
 }
 
 function getTitle(string) {
@@ -45,7 +45,7 @@ function getTitle(string) {
 }
 
 const getServicePercentPrices = function (totalCost, rollbackPercentage) {
-    return totalCost - rollbackPercentage
+   if(isNumber(totalCost - rollbackPercentage)) return totalCost - rollbackPercentage
 }
 
 const showTypeOf = function (variable) {
@@ -68,9 +68,6 @@ const getRollbackMessage = function (price) {
 screenPrice = myScreenPrice();
 const allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
 const fullPrice = getFullPrice(screenPrice, allServicePrices);
-console.log("allServicePrices", allServicePrices);
-console.log("screenPrice", screenPrice);
-console.log("fullPrice", fullPrice);
 const rollbackPercentage = fullPrice * (rollback / 100);
 const servicePercentPrice = getServicePercentPrices(fullPrice, rollbackPercentage);
 
