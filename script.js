@@ -34,13 +34,13 @@ let appData = {
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
     },
-    getPrice: function (msg, sum = 0) {
+    getPrice: function (msg) {
         let price = 0;
         do {
             price += +prompt(msg);
         } while (!appData.isNumber(price))
 
-        return sum += +price
+        return +price
     },
     getAllServicePrices: function () {
         let sum = 0;
@@ -69,7 +69,7 @@ let appData = {
         return Math.ceil(res)
     },
     showTypeOf: function (variable) {
-        console.log("[variable]", typeof variable);
+        console.log(typeof variable);
     },
     getRollbackMessage: function (price) {
         switch (true) {
