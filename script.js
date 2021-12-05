@@ -1,38 +1,54 @@
 'use strict'
 
 // Узнаем подробности проекта 
-const title = prompt("Как называется ваш проект ?");
-const screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
-const arrayScreens = screens.toLowerCase().split(",");
-const adaptive = confirm("Нужен ли адаптив на сайте?");
-
-// Узнаем про дополнительные услуги и их стоимость 
-const service1 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов");
-const servicePrice1 = +prompt("Сколько это будет стоить?", "например: 1000");
-const service2 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов");
-const servicePrice2 = +prompt("Сколько это будет стоить?", "например: 1000");
-
-// Рассчитываем стоимость проекта
-const rollback = 27;
+let title;
+let screens;
 let screenPrice;
-
+let adaptive;
+const rollback = 27;
+let allServicePrices;
+let fullPrice;
+let servicePercentPrice;
+let service1;
+let service2;
 
 // функциональный блок
-const myScreenPrice = function () {
-    let price = 0;
-    do {
-        price += +prompt("Сколько будет стоить данная работа?", "пример: 12000");
-    } while (false)
-
-    return price
-}
-
 const isNumber = function (num) {
     return !isNaN(parseFloat(num)) && isFinite(num)
 }
 
-const getAllServicePrices = function (servicePrice1, servicePrice2) {
-    if (isNumber(servicePrice1 + servicePrice2)) return servicePrice1 + servicePrice2;
+const asking = function() {
+    title = prompt("Как называется ваш проект ?");
+    screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
+    adaptive = confirm("Нужен ли адаптив на сайте?");
+}
+
+const myScreenPrice = function () {
+    let price = 0;
+    do {
+        price += +prompt("Сколько будет стоить данная работа?", "пример: 12000");
+    } while (!isNumber(price))
+
+    return price
+}
+
+const getAllServicePrices = function () {
+    let sum = 0;
+    for(let i = 0; i < 2; i++){
+        let cost = 0;
+
+        if(i === 0) {
+            service1 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
+        } else if(i === 1) {
+            service2 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
+        }
+
+        do {
+            cost = +prompt("Сколько это будет стоить?", "например: 1000")
+        } while(!isNumber(cost))
+        sum += +cost
+    } 
+    return sum;
 }
 
 function getFullPrice(screenPrice, allServicePrices) {
@@ -44,8 +60,8 @@ function getTitle(string) {
     return trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
 }
 
-const getServicePercentPrices = function (totalCost, rollbackPercentage) {
-   if(isNumber(totalCost - rollbackPercentage)) return totalCost - rollbackPercentage
+const getServicePercentPrices = function (totalCost) {
+   return totalCost - (totalCost * (rollback / 100))
 }
 
 const showTypeOf = function (variable) {
@@ -65,19 +81,20 @@ const getRollbackMessage = function (price) {
     }
 }
 
+asking()
+allServicePrices = getAllServicePrices();
 screenPrice = myScreenPrice();
-const allServicePrices = getAllServicePrices(servicePrice1, servicePrice2);
-const fullPrice = getFullPrice(screenPrice, allServicePrices);
-const rollbackPercentage = fullPrice * (rollback / 100);
-const servicePercentPrice = getServicePercentPrices(fullPrice, rollbackPercentage);
+fullPrice = getFullPrice(screenPrice,allServicePrices);
+servicePercentPrice = getServicePercentPrices(fullPrice);
+title = getTitle(title);
 
-
-showTypeOf(title);
 showTypeOf(fullPrice);
+showTypeOf(title);
+showTypeOf(screenPrice);
 showTypeOf(adaptive);
 
 // блок вывода в console
-console.log("[screens]", screens.length);
-console.log("[arrayScreens]", arrayScreens);
-console.log("[servicePercentPrice]", servicePercentPrice);
+console.log("[allServicePrices]",allServicePrices);
 console.log("[getRollbackMessage]", getRollbackMessage(fullPrice));
+console.log("[screens]", screens.length);
+console.log("[servicePercentPrice]", servicePercentPrice);
