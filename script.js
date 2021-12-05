@@ -14,7 +14,6 @@ let appData = {
     start: function () {
         appData.asking()
         appData.allServicePrices = appData.getAllServicePrices();
-        appData.screenPrice = appData.getPrice();
         appData.fullPrice = appData.getFullPrice();
         appData.servicePercentPrice = appData.getServicePercentPrices();
         appData.title = appData.getTitle();
@@ -84,7 +83,6 @@ let appData = {
         }
     },
     logger: function () {
-
         for (let prop in appData) {
         if (typeof appData[prop] !== "function") {
                 console.log("Ключ: " + prop + " " + "Значение: " + appData[prop]);
