@@ -20,17 +20,18 @@ const isNumber = function (num) {
 const asking = function() {
     title = prompt("Как называется ваш проект ?");
     screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
-    screenPrice = myScreenPrice()
+    screenPrice = getPrice("Сколько будет стоить данная работа? Например: 20000 ")
     adaptive = confirm("Нужен ли адаптив на сайте?");
 }
 
-const myScreenPrice = function () {
-    let price = 0;
+const getPrice = function (msg, sum = 0) {
+    let price;
+    
     do {
-        price += +prompt("Сколько будет стоить данная работа?", "пример: 12000");
-    } while (!isNumber(price))
+        price = prompt(msg);
+    } while (!isNumber(pric))
 
-    return price
+    return sum += +price
 }
 
 const getAllServicePrices = function () {
@@ -43,7 +44,7 @@ const getAllServicePrices = function () {
             service2 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
         }
 
-        sum += myScreenPrice()
+        sum += getPrice("Сколько это будет стоить? Например: 10000")
     } 
     return sum;
 }
