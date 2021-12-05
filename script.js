@@ -24,14 +24,14 @@ const asking = function() {
     adaptive = confirm("Нужен ли адаптив на сайте?");
 }
 
-const getPrice = function (msg, sum = 0) {
+const getPrice = function (msg) {
     let price;
     
     do {
         price = prompt(msg);
-    } while (!isNumber(pric))
+    } while (!isNumber(price))
 
-    return sum += +price
+    return +price
 }
 
 const getAllServicePrices = function () {
