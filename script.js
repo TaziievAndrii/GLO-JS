@@ -20,6 +20,7 @@ const isNumber = function (num) {
 const asking = function() {
     title = prompt("Как называется ваш проект ?");
     screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
+    screenPrice = myScreenPrice()
     adaptive = confirm("Нужен ли адаптив на сайте?");
 }
 
@@ -35,7 +36,6 @@ const myScreenPrice = function () {
 const getAllServicePrices = function () {
     let sum = 0;
     for(let i = 0; i < 2; i++){
-        let cost = 0;
 
         if(i === 0) {
             service1 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
@@ -43,25 +43,22 @@ const getAllServicePrices = function () {
             service2 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
         }
 
-        do {
-            cost = +prompt("Сколько это будет стоить?", "например: 1000")
-        } while(!isNumber(cost))
-        sum += +cost
+        sum += myScreenPrice()
     } 
     return sum;
 }
 
-function getFullPrice(screenPrice, allServicePrices) {
-    if (isNumber(screenPrice + allServicePrices)) return screenPrice + allServicePrices
+function getFullPrice() {
+    return +screenPrice + allServicePrices
 }
 
-function getTitle(string) {
-    const trimmedString = string.trim().toLowerCase();
+function getTitle() {
+    const trimmedString = title.trim().toLowerCase();
     return trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
 }
 
-const getServicePercentPrices = function (totalCost) {
-   return totalCost - (totalCost * (rollback / 100))
+const getServicePercentPrices = function () {
+   return fullPrice - (fullPrice * (rollback / 100))
 }
 
 const showTypeOf = function (variable) {
@@ -83,10 +80,9 @@ const getRollbackMessage = function (price) {
 
 asking()
 allServicePrices = getAllServicePrices();
-screenPrice = myScreenPrice();
-fullPrice = getFullPrice(screenPrice,allServicePrices);
-servicePercentPrice = getServicePercentPrices(fullPrice);
-title = getTitle(title);
+fullPrice = getFullPrice();
+servicePercentPrice = getServicePercentPrices();
+title = getTitle();
 
 showTypeOf(fullPrice);
 showTypeOf(title);
