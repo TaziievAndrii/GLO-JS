@@ -40,8 +40,9 @@ let appData = {
         }
     },
     checkString: function (str) {
-        let name = prompt(str)
-        if (typeof name !== "string" || /^[0-9]+$/.test(name)) {
+        let name = prompt(str).trim()
+
+        if (typeof name !== "string" || /^\d+$/.test(name) || name === '') {
             appData.checkString(str)
         }
         return name
