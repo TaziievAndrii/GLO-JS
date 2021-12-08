@@ -1,4 +1,14 @@
 'use strict'
+const title = document.getElementsByTagName("h1");
+const calculate = document.getElementsByClassName("handler_btn")
+const buttonPlus = document.querySelector(".screen-btn")
+const otherPercent = document.querySelectorAll(".other-items.percent")
+const otherNumber = document.querySelectorAll(".other-items.number")
+const inputRange = document.querySelector(".rollback > div > input[type=range]")
+const spanRange = document.querySelector(".rollback > div > .range-value")
+const totalInput = document.getElementsByClassName("total-input")
+let screen = document.querySelectorAll(".screen")
+
 
 let appData = {
     title: '',
