@@ -2,7 +2,7 @@
 
 let appData = {
     title: '',
-    screens: '',
+    screens: [],
     screenPrice: 0,
     adaptive: '',
     rollback: 10,
@@ -24,16 +24,27 @@ let appData = {
         appData.logger()
     },
     asking: function () {
-        appData.title = prompt("Как называется ваш проект ?");
-        appData.screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
-        appData.screenPrice = appData.getPrice("Сколько будет стоить данная работа? Например: 20000 ")
+        appData.title = appData.checkString(" Как называется Ваш проект ? ");
+
         appData.adaptive = confirm("Нужен ли адаптив на сайте?");
 
         for (let i = 0; i < 2; i++) {
-            let name = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
-            
-            appData.services[name]= appData.getPrice("Сколько это будет стоить? Например: 10000")
+            let name = appData.checkString("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные")
+            appData.screens[name] = appData.getPrice("Сколько будет стоить данная работа? Например: 20000 ")
+            appData.screens.push({ id: i, name: name, price: appData.screens[name] })
         }
+
+        for (let i = 0; i < 2; i++) {
+            let name = appData.checkString("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
+            appData.services[name] = appData.getPrice("Сколько это будет стоить? Например: 10000")
+        }
+    },
+    checkString: function (str) {
+        let name = prompt(str)
+        if (typeof name !== "string" || /^[0-9]+$/.test(name)) {
+            appData.checkString(str)
+        }
+        return name
     },
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
@@ -47,7 +58,7 @@ let appData = {
         return +price
     },
     getAllServicePrices: function () {
-        for (let key in appData.services){
+        for (let key in appData.services) {
             appData.allServicePrices += appData.services[key]
         }
     },
@@ -59,8 +70,8 @@ let appData = {
         appData.title = trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
     },
     getServicePercentPrices: function () {
-        let res =  appData.fullPrice - (appData.fullPrice * (appData.rollback / 100))
-        appData.servicePercentPrice =  Math.ceil(res)
+        let res = appData.fullPrice - (appData.fullPrice * (appData.rollback / 100))
+        appData.servicePercentPrice = Math.ceil(res)
     },
     showTypeOf: function (variable) {
         console.log(typeof variable);
@@ -83,11 +94,12 @@ let appData = {
     },
     logger: function () {
         for (let prop in appData) {
-        if (typeof appData[prop] !== "function") {
+            if (typeof appData[prop] !== "function") {
                 console.log("Ключ: " + prop + " " + "Значение: " + appData[prop]);
             }
         }
     }
 }
+console.log("[appData.screens]", appData.screens);
 console.log(appData.services);
 appData.start()
