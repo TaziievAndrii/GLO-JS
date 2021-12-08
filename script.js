@@ -9,15 +9,14 @@ let appData = {
     allServicePrices: 0,
     fullPrice: 0,
     servicePercentPrice: 0,
-    service1: '',
-    service2: '',
+    services: {},
     start: function () {
         appData.asking()
-        appData.allServicePrices = appData.getAllServicePrices();
-        appData.fullPrice = appData.getFullPrice();
-        appData.servicePercentPrice = appData.getServicePercentPrices();
-        appData.title = appData.getTitle();
-        appData.getRollbackMessage = appData.getRollbackMessage(appData.fullPrice)
+        appData.getAllServicePrices();
+        appData.getFullPrice();
+        appData.getServicePercentPrices();
+        appData.getTitle();
+        appData.getRollbackMessage(appData.fullPrice)
         appData.showTypeOf(appData.fullPrice);
         appData.showTypeOf(appData.title);
         appData.showTypeOf(appData.screenPrice);
@@ -29,6 +28,12 @@ let appData = {
         appData.screens = prompt("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные");
         appData.screenPrice = appData.getPrice("Сколько будет стоить данная работа? Например: 20000 ")
         appData.adaptive = confirm("Нужен ли адаптив на сайте?");
+
+        for (let i = 0; i < 2; i++) {
+            let name = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
+            
+            appData.services[name]= appData.getPrice("Сколько это будет стоить? Например: 10000")
+        }
     },
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
@@ -42,30 +47,20 @@ let appData = {
         return +price
     },
     getAllServicePrices: function () {
-        let sum = 0;
-        for (let i = 0; i < 2; i++) {
-
-            if (i === 0) {
-                appData.service1 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
-            } else if (i === 1) {
-                appData.service2 = prompt("Какой дополнительный тип услуги нужен?", "например: Админка, Встраивание плагинов")
-            }
-
-
-            sum += appData.getPrice("Сколько это будет стоить? Например: 10000")
+        for (let key in appData.services){
+            appData.allServicePrices += appData.services[key]
         }
-        return sum;
     },
     getFullPrice: function () {
-        return +appData.screenPrice + appData.allServicePrices
+        appData.fullPrice = +appData.screenPrice + appData.allServicePrices
     },
     getTitle: function () {
         const trimmedString = appData.title.trim().toLowerCase();
-        return trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
+        appData.title = trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
     },
     getServicePercentPrices: function () {
         let res =  appData.fullPrice - (appData.fullPrice * (appData.rollback / 100))
-        return Math.ceil(res)
+        appData.servicePercentPrice =  Math.ceil(res)
     },
     showTypeOf: function (variable) {
         console.log(typeof variable);
@@ -73,13 +68,17 @@ let appData = {
     getRollbackMessage: function (price) {
         switch (true) {
             case price >= 30000:
-                return "Даем скидку в 10%"
+                appData.getRollbackMessage = "Даем скидку в 10%"
+                return
             case price >= 15000 && price < 30000:
-                return "Даем скидку в 5%"
+                appData.getRollbackMessage = "Даем скидку в 5%"
+                return
             case price < 15000 && price >= 0:
-                return "Скидка не предусмотрена"
+                appData.getRollbackMessage = "Скидка не предусмотрена"
+                return
             case price < 0:
-                return "Что то пошло не так"
+                appData.getRollbackMessage = "Что то пошло не так"
+                return
         }
     },
     logger: function () {
@@ -90,5 +89,5 @@ let appData = {
         }
     }
 }
-
+console.log(appData.services);
 appData.start()
