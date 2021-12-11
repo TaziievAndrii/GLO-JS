@@ -45,10 +45,10 @@ let appData = {
             
         if(name != null) name.trim()
 
-        if (typeof name !== "string" || /^\d+$/.test(name) || name === '') {
-            appData.checkString(str)
-        }
-        return name
+        if (typeof name !== "string" || appData.isNumber(name)|| name === '') {
+          return appData.checkString(str)
+        } 
+            return name
     },
     isNumber: function (num) {
         return !isNaN(parseFloat(num)) && isFinite(num)
