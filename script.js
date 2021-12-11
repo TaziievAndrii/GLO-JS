@@ -30,7 +30,8 @@ let appData = {
 
         for (let i = 0; i < 2; i++) {
             let name = appData.checkString("Какие типы экранов нужно разработать?", "пример: Простые, Сложные, Интерактивные")
-            appData.screens[name] = appData.getPrice("Сколько будет стоить данная работа? Например: 20000 ")
+            appData.screenPrice = appData.getPrice("Сколько будет стоить данная работа? Например: 20000 ")
+            appData.screens[name] = appData.screenPrice
             appData.screens.push({ id: i, name: name, price: appData.screens[name] })
         }
 
@@ -40,7 +41,9 @@ let appData = {
         }
     },
     checkString: function (str) {
-        let name = prompt(str).trim()
+        let name = prompt(str)
+            
+        if(name != null) name.trim()
 
         if (typeof name !== "string" || /^\d+$/.test(name) || name === '') {
             appData.checkString(str)
