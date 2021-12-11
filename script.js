@@ -70,7 +70,8 @@ let appData = {
         appData.fullPrice = +appData.screenPrice + appData.allServicePrices
     },
     getTitle: function () {
-        const trimmedString = appData.title.trim().toLowerCase();
+        const trimmedString = appData.title;
+        if(trimmedString != null) trimmedString.trim().toLowerCase();
         appData.title = trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
     },
     getServicePercentPrices: function () {
