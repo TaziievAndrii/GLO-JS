@@ -8,11 +8,11 @@ const rollback = document.querySelector(".rollback > div");
 const inputRange = rollback.childNodes[1];
 const spanRange = rollback.childNodes[3];
 const totalInput = document.getElementsByClassName("total-input");
-const layoutCost = totalInput[0]
-const numberScreens = totalInput[1]
-const costAdditionalServices = totalInput[2]
-const totalValue = totalInput[3]
-const costIncludingRollback = totalInput[4]
+const layoutCost = totalInput[0];
+const numberScreens = totalInput[1];
+const costAdditionalServices = totalInput[2];
+const totalValue = totalInput[3];
+const costIncludingRollback = totalInput[4];
 let screen = document.querySelectorAll(".screen");
 
 const appData = {
@@ -44,20 +44,19 @@ const appData = {
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
 
     for (let i = 0; i < 2; i++) {
-      let name = appData.checkString(
-        "Какие типы экранов нужно разработать?",
-        "пример: Простые, Сложные, Интерактивные"
+      const name = appData.checkString(
+        "Какие типы экранов нужно разработать?пример: Простые, Сложные, Интерактивные"
       );
-      appData.screens[name] = appData.getPrice(
+      appData.screenPrice = appData.getPrice(
         "Сколько будет стоить данная работа? Например: 20000 "
       );
-      appData.screens.push({ id: i, name: name, price: appData.screens[name] });
+      appData.screens[name] = appData.screenPrice;
+      appData.screens.push({ id: i, name, price: appData.screens[name] });
     }
 
     for (let i = 0; i < 2; i++) {
-      let name = appData.checkString(
-        "Какой дополнительный тип услуги нужен?",
-        "например: Админка, Встраивание плагинов"
+      const name = appData.checkString(
+        "Какой дополнительный тип услуги нужен?например: Админка, Встраивание плагинов"
       );
       appData.services[name] = appData.getPrice(
         "Сколько это будет стоить? Например: 10000"
@@ -76,10 +75,11 @@ const appData = {
     return !isNaN(parseFloat(num)) && isFinite(num);
   },
   getPrice: function (msg) {
-    let price = 0;
-    do {
-      price += +prompt(msg);
-    } while (!appData.isNumber(price));
+    let price = prompt(msg);
+
+    if (!appData.isNumber(price)) {
+      price = appData.getPrice(msg);
+    }
 
     return +price;
   },
