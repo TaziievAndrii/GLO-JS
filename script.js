@@ -60,12 +60,13 @@ const appData = {
     return !isNaN(parseFloat(num)) && isFinite(num);
   },
   getPrice: function (msg) {
-    let price = 0;
-    do {
-      price += +prompt(msg);
-    } while (!appData.isNumber(price));
+    let price = prompt(msg)
 
-    return +price;
+    if(!appData.isNumber(price)){
+      price = appData.getPrice(msg)
+    }
+
+    return price;
   },
   getAllServicePrices: function () {
     for (const key in appData.services) {
