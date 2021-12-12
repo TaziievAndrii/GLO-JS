@@ -66,8 +66,9 @@ const appData = {
   },
   checkString: function (str) {
     let name = prompt(str);
-    if (typeof name !== "string" || /^[0-9]+$/.test(name)) {
-      appData.checkString(str);
+
+    if (!isNaN(name)) {
+      name = appData.checkString(str);
     }
     return name;
   },
@@ -91,9 +92,14 @@ const appData = {
     appData.fullPrice = +appData.screenPrice + appData.allServicePrices;
   },
   getTitle: function () {
-    const trimmedString = appData.title.trim().toLowerCase();
-    appData.title =
-      trimmedString.charAt(0).toUpperCase() + trimmedString.slice(1);
+    const trimmedString = appData.title;
+    let name;
+    if (trimmedString != null) {
+      name = trimmedString.trim().toLowerCase();
+      appData.title = name.charAt(0).toUpperCase() + name.slice(1);
+    }
+
+    return name;
   },
   getServicePercentPrices: function () {
     let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
