@@ -1,6 +1,6 @@
 "use strict";
 
-let appData = {
+const appData = {
   title: "",
   screens: [],
   screenPrice: 0,
@@ -29,18 +29,18 @@ let appData = {
     appData.adaptive = confirm("Нужен ли адаптив на сайте?");
 
     for (let i = 0; i < 2; i++) {
-      let name = appData.checkString(
+      const name = appData.checkString(
         "Какие типы экранов нужно разработать?пример: Простые, Сложные, Интерактивные"
       );
       appData.screenPrice = appData.getPrice(
         "Сколько будет стоить данная работа? Например: 20000 "
       );
       appData.screens[name] = appData.screenPrice;
-      appData.screens.push({ id: i, name: name, price: appData.screens[name] });
+      appData.screens.push({ id: i, name, price: appData.screens[name] });
     }
 
     for (let i = 0; i < 2; i++) {
-      let name = appData.checkString(
+      const name = appData.checkString(
         "Какой дополнительный тип услуги нужен?например: Админка, Встраивание плагинов"
       );
       appData.services[name] = appData.getPrice(
@@ -68,7 +68,7 @@ let appData = {
     return +price;
   },
   getAllServicePrices: function () {
-    for (let key in appData.services) {
+    for (const key in appData.services) {
       appData.allServicePrices += appData.services[key];
     }
   },
@@ -78,7 +78,7 @@ let appData = {
   getTitle: function () {
     const trimmedString = appData.title;
     let name;
-    if (trimmedString != null) {
+    if (trimmedString !== null) {
       name = trimmedString.trim().toLowerCase();
       appData.title = name.charAt(0).toUpperCase() + name.slice(1);
     }
@@ -86,7 +86,7 @@ let appData = {
     return name;
   },
   getServicePercentPrices: function () {
-    let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
+    const res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
     appData.servicePercentPrice = Math.ceil(res);
   },
   showTypeOf: function (variable) {
@@ -109,9 +109,9 @@ let appData = {
     }
   },
   logger: function () {
-    for (let prop in appData) {
+    for (const prop in appData) {
       if (typeof appData[prop] !== "function") {
-        console.log("Ключ: " + prop + " " + "Значение: " + appData[prop]);
+        console.log("Ключ: " + prop + " Значение: " + appData[prop]);
       }
     }
   },
