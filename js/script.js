@@ -1,12 +1,12 @@
 "use strict";
-const title = document.getElementsByTagName("h1");
-const calculate = document.getElementsByClassName("handler_btn");
+const title = document.getElementsByTagName("h1")[0];
+const calculate = document.getElementsByClassName("handler_btn")[0];
+const reset = document.getElementsByClassName("handler_btn")[1];
 const buttonPlus = document.querySelector(".screen-btn");
 const otherPercent = document.querySelectorAll(".other-items.percent");
 const otherNumber = document.querySelectorAll(".other-items.number");
-const rollback = document.querySelector(".rollback > div");
-const inputRange = rollback.childNodes[1];
-const spanRange = rollback.childNodes[3];
+const inputRange = document.querySelector(".rollback  input");
+const spanRange = document.querySelector(".rollback .range-value ")
 const totalInput = document.getElementsByClassName("total-input");
 const layoutCost = totalInput[0];
 const numberScreens = totalInput[1];
