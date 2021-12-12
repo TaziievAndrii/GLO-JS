@@ -60,10 +60,10 @@ const appData = {
     return !isNaN(parseFloat(num)) && isFinite(num);
   },
   getPrice: function (msg) {
-    let price = prompt(msg)
+    let price = prompt(msg);
 
-    if(!appData.isNumber(price)){
-      price = appData.getPrice(msg)
+    if (!appData.isNumber(price)) {
+      price = appData.getPrice(msg);
     }
 
     return +price;
@@ -87,7 +87,8 @@ const appData = {
     return name;
   },
   getServicePercentPrices: function () {
-    const res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
+    const res =
+      appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
     appData.servicePercentPrice = Math.ceil(res);
   },
   showTypeOf: function (variable) {
