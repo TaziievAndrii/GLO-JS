@@ -66,7 +66,7 @@ const appData = {
       price = appData.getPrice(msg)
     }
 
-    return price;
+    return +price;
   },
   getAllServicePrices: function () {
     for (const key in appData.services) {
