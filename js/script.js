@@ -170,23 +170,6 @@ const appData = {
     console.log(typeof variable);
   },
 
-  getRollbackMessage: function (price) {
-    switch (true) {
-      case price >= 30000:
-        appData.getRollbackMessage = "Даем скидку в 10%";
-        return;
-      case price >= 15000 && price < 30000:
-        appData.getRollbackMessage = "Даем скидку в 5%";
-        return;
-      case price < 15000 && price >= 0:
-        appData.getRollbackMessage = "Скидка не предусмотрена";
-        return;
-      case price < 0:
-        appData.getRollbackMessage = "Что то пошло не так";
-        return;
-    }
-  },
-
   logger: function () {
     for (let prop in appData) {
       if (typeof appData[prop] !== "function") {
