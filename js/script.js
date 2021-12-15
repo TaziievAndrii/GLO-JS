@@ -16,6 +16,11 @@ const totalValue = totalInput[3];
 const costIncludingRollback = totalInput[4];
 let screens = document.querySelectorAll(".screen");
 
+const select = document.querySelector("select");
+const input = document.querySelector("input[type=text]");
+
+const rangeSpan = document.querySelector(".range-value");
+
 const appData = {
   title: "",
   screens: [],
@@ -38,19 +43,25 @@ const appData = {
   addTitle: function () {
     document.title = title.textContent;
   },
+  isError: false,
+
+  checkValue: function () {
+    screens.forEach((screen) => {
+      if (select.value === "" || input.value === "") {
+        alert("Не все поля заполнены");
+        appData.isError = true;
+      }
+    });
+  },
 
   start: function () {
     appData.addScreen();
     appData.addServices();
     appData.getAllServicePrices();
+    appData.checkValue();
 
-    if (
-      appData.screens.find((screen) => {
-        return screen.name === "Тип экранов" || screen.price <= 0;
-      })
-    ) {
-      alert("Один из типов экрана или количество заполнено некорректно");
-    }
+    rangeSpan.addEventListener("input", appData.setSize);
+
     // appData.getServicePercentPrices();
     // appData.logger();
     console.log("[appData]", appData);
@@ -153,6 +164,10 @@ const appData = {
   getServicePercentPrices: function () {
     let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
     appData.servicePercentPrice = Math.ceil(res);
+  },
+
+  setSize: function (event) {
+    rangeSpan.textContent = event.target.value + "%";
   },
 
   showTypeOf: function (variable) {
