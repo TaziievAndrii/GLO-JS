@@ -8,16 +8,15 @@ const otherNumber = document.querySelectorAll(".other-items.number");
 const inputRange = document.querySelector(".rollback  input");
 const spanRange = document.querySelector(".rollback .range-value ");
 const totalInput = document.getElementsByClassName("total-input");
-
 const layoutCost = totalInput[0];
 const numberScreens = totalInput[1];
 const costAdditionalServices = totalInput[2];
 const totalValue = totalInput[3];
 const costIncludingRollback = totalInput[4];
 let screens = document.querySelectorAll(".screen");
-
 const select = document.querySelector("select");
 const input = document.querySelector("input[type=text]");
+let countScreens;
 
 const appData = {
   title: "",
@@ -75,6 +74,7 @@ const appData = {
       appData.servicePricesPercent + appData.servicePricesNumber;
     totalValue.value = appData.fullPrice;
     costIncludingRollback.value = appData.servicePercentPrice;
+    numberScreens.value = countScreens;
   },
 
   addScreen: function () {
@@ -89,6 +89,7 @@ const appData = {
         id: index,
         name: selectName,
         price: +select.value * +input.value,
+        count: +input.value,
       });
     });
   },
@@ -161,15 +162,9 @@ const appData = {
     appData.servicePercentPrice = Math.ceil(
       appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
     );
-  },
 
-  // getServicePercentPrices: function () {
-  //   // let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
-  //   // appData.servicePercentPrice = Math.ceil(res);
-  //   appData.servicePercentPrice = Math.ceil(
-  //     appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
-  //   );
-  // },
+    countScreens = appData.screens.reduce((a, b) => a + b.count, 0);
+  },
 
   showTypeOf: function (variable) {
     console.log(typeof variable);
