@@ -19,8 +19,6 @@ let screens = document.querySelectorAll(".screen");
 const select = document.querySelector("select");
 const input = document.querySelector("input[type=text]");
 
-const rangeSpan = document.querySelector(".range-value");
-
 const appData = {
   title: "",
   screens: [],
@@ -38,6 +36,11 @@ const appData = {
 
     calculate.addEventListener("click", appData.start);
     buttonPlus.addEventListener("click", appData.addScreenBlock);
+    inputRange.addEventListener("input", appData.setSize);
+  },
+
+  setSize: function (event) {
+    spanRange.textContent = event.target.value + "%";
   },
 
   addTitle: function () {
@@ -164,10 +167,6 @@ const appData = {
   getServicePercentPrices: function () {
     let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
     appData.servicePercentPrice = Math.ceil(res);
-  },
-
-  setSize: function (event) {
-    rangeSpan.textContent = event.target.value + "%";
   },
 
   showTypeOf: function (variable) {
