@@ -43,6 +43,14 @@ const appData = {
     appData.addScreen();
     appData.addServices();
     appData.getAllServicePrices();
+
+    if (
+      appData.screens.find((screen) => {
+        return screen.name === "Тип экранов" || screen.price <= 0;
+      })
+    ) {
+      alert("Один из типов экрана или количество заполнено некорректно");
+    }
     // appData.getServicePercentPrices();
     // appData.logger();
     console.log("[appData]", appData);
