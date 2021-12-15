@@ -61,7 +61,7 @@ const appData = {
   start: function () {
     appData.addScreen();
     appData.addServices();
-    appData.getAllServicePrices();
+    appData.addPrice();
     appData.checkValue();
 
     // appData.getServicePercentPrices();
@@ -74,6 +74,7 @@ const appData = {
     costAdditionalServices.value =
       appData.servicePricesPercent + appData.servicePricesNumber;
     totalValue.value = appData.fullPrice;
+    costIncludingRollback.value = appData.servicePercentPrice;
   },
 
   addScreen: function () {
@@ -138,7 +139,7 @@ const appData = {
     return +price;
   },
 
-  getAllServicePrices: function () {
+  addPrice: function () {
     for (const screen of appData.screens) {
       appData.screenPrice += +screen.price;
     }
@@ -156,12 +157,19 @@ const appData = {
       +appData.screenPrice +
       appData.servicePricesPercent +
       appData.servicePricesNumber;
+
+    appData.servicePercentPrice = Math.ceil(
+      appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
+    );
   },
 
-  getServicePercentPrices: function () {
-    let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
-    appData.servicePercentPrice = Math.ceil(res);
-  },
+  // getServicePercentPrices: function () {
+  //   // let res = appData.fullPrice - appData.fullPrice * (appData.rollback / 100);
+  //   // appData.servicePercentPrice = Math.ceil(res);
+  //   appData.servicePercentPrice = Math.ceil(
+  //     appData.fullPrice - appData.fullPrice * (appData.rollback / 100)
+  //   );
+  // },
 
   showTypeOf: function (variable) {
     console.log(typeof variable);
