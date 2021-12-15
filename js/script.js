@@ -24,7 +24,7 @@ const appData = {
   screens: [],
   screenPrice: 0,
   adaptive: "",
-  rollback: 10,
+  rollback: 0,
   servicePricesPercent: 0,
   servicePricesNumber: 0,
   fullPrice: 0,
@@ -41,6 +41,7 @@ const appData = {
 
   setSize: function (event) {
     spanRange.textContent = event.target.value + "%";
+    appData.rollback = event.target.value;
   },
 
   addTitle: function () {
@@ -63,11 +64,8 @@ const appData = {
     appData.getAllServicePrices();
     appData.checkValue();
 
-    rangeSpan.addEventListener("input", appData.setSize);
-
     // appData.getServicePercentPrices();
     // appData.logger();
-    console.log("[appData]", appData);
     appData.showResult();
   },
 
@@ -91,10 +89,7 @@ const appData = {
         name: selectName,
         price: +select.value * +input.value,
       });
-      console.log("[select]", selectName);
     });
-
-    console.log("[appData.screens]", appData.screens);
   },
 
   addServices: function () {
@@ -121,7 +116,6 @@ const appData = {
 
   addScreenBlock: function () {
     const cloneSscreen = screens[0].cloneNode(true);
-    console.log("[cloneSscreen]", cloneSscreen);
     screens[screens.length - 1].after(cloneSscreen);
   },
 
